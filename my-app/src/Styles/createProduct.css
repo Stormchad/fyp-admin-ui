@@ -1,0 +1,50 @@
+h1 {
+    --s: 0.1em;   /* the thickness of the line */
+    --c: #2c4bff; /* the color */
+    
+    color: #0000;
+    padding-bottom: var(--s);
+    background: 
+      linear-gradient(90deg,var(--c) 50%,#000 0) calc(100% - var(--_p,0%))/200% 100%,
+      linear-gradient(var(--c) 0 0) 0% 100%/var(--_p,0%) var(--s) no-repeat;
+    -webkit-background-clip: text,padding-box;
+            background-clip: text,padding-box;
+    transition: 0.5s;
+    text-align:center;
+    font-family: 'Open Sans', sans-serif;
+  }
+  
+  
+  h1:hover {--_p: 100%}
+  
+  
+  body {
+    margin: 0;
+    display: grid;
+  }
+  
+
+  h1 {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 30px;
+    cursor: pointer;
+  }
+
+  .create-product-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .create-product-form {
+    width: 400px;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+  }
+  
+  button:hover {
+    background-color: #0062cc;
+  }
+  
