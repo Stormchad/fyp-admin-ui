@@ -14,9 +14,17 @@ h1 {
     font-family: 'Open Sans', sans-serif;
   }
   
+  .card {
+    transition: transform 0.3s ease; /* Add a transition for the transform property */
+  }
+
   .card:hover {
     transform: scale(1.05); /* Increase the size of the card */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Add a subtle shadow effect */
+  }
+
+  .card {
+    transition: transform 0.3s ease; /* Add a transition for the transform property */
   }
   
   h1:hover {--_p: 100%}
