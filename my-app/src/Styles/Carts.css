@@ -5,3 +5,10 @@
   *{
     font-family: 'Open Sans', sans-serif;
   }
+
+  /* Add the following CSS code to your project's stylesheet */
+
+.card:hover {
+  transform: scale(1.05); /* Increase the size of the card */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Add a subtle shadow effect */
+}
