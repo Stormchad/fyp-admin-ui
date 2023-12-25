@@ -5,25 +5,29 @@ import { Card, CardBody, CardTitle, CardText, Button  } from 'reactstrap';
 import '../Styles/Carts.css';
 import NavigationBar from './NavigationBar';
 import Header from './Header';
+import SearchBar from './searchBar';
+import '../Styles/SearchBar.css';
 
 
 function Cart() {
   const [data, setData] = useState([]);
   const [message, setMessage] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const fetchData = async() =>{
+      const response = await axios.get('http://localhost:4002/carts');
+      setData(response.data.docs);
+  }
 
   useEffect(() => {
-    async function fetchData() {
-      const response = await axios.get('https://us-central1-cart-4dab3.cloudfunctions.net/api/carts');
-      setData(response.data);
-    }
-
     fetchData();
   }, []);
 
 
+
 const handleDelete = async (cartId) => {
   try {
-    await fetch(`https://us-central1-cart-4dab3.cloudfunctions.net/api/cart/${cartId}`, 
+    await fetch(`http://localhost:4002/cart/${cartId}`, 
     {
       method: 'DELETE',
     })
@@ -53,7 +57,7 @@ const handleDelete = async (cartId) => {
 
 const handleReset = async (cartId) => {
   try {
-    await fetch(`vhttps://us-central1-cart-4dab3.cloudfunctions.net/api/admin/cart/reset/${cartId}`, 
+    await fetch(`http://localhost:4002/admin/cart/reset/${cartId}`, 
     {
       method: 'POST',
     })
@@ -81,13 +85,23 @@ const handleReset = async (cartId) => {
   }
 };
 
+const handleSearch = async () => {
+  try {
+    const response = await axios.get(`http://localhost:4002/cart/search?cartNumber=${searchTerm}`);
+    setData(response.data.docs || []); // Set data to response.data.docs or an empty array if undefined
+  } catch (error) {
+    console.error(error);
+  }
+};
 
-
-
-
+const clearSearch = () => {
+  setSearchTerm(''); // Clear the searchTerm state
+  fetchData(); // Fetch all carts again
+};
 
   const rows = [];
   let currentRow = [];
+  console.log(data)
   for (let i = 0; i < data.length; i++) {
     currentRow.push(
       <div className="col-md-4 mb-3" key={data[i].id}>
@@ -126,21 +140,25 @@ const handleReset = async (cartId) => {
 
     <div>
         <Header/>
+
         <NavigationBar/>
+
+        <SearchBar
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        handleSearch={handleSearch}
+        clearSearch={clearSearch}
+      />
+
         {message && (
           <div className="alert alert-dark" role="alert">
             {message}
           </div>
         )}
-      <div>
-          <header className="header">
-            <h1><b>Carts</b></h1>
-          </header>
-        </div>
 
         <div>
         <Link to="/CreateCart">
-          <button>Create Cart</button>
+          <button className="create-cart-btn">Create Cart</button>
         </Link>
         </div>
 

@@ -1,15 +1,67 @@
-.shadow-sm {
-  box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
-}
-
 *{
   font-family: 'Open Sans', sans-serif;
 }
-.card:hover {
-  transform: scale(1.05); /* Increase the size of the card */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Add a subtle shadow effect */
+
+
+.product-container {
+  margin: 20px;
 }
 
-.card {
-  transition: transform 0.3s ease; /* Add a transition for the transform property */
+.product-header {
+  display: flex;
+  align-items: center;
+  margin-top:20px;
+  margin-bottom: 20px;
+}
+
+.product-header h1 {
+  margin: 0;
+}
+
+.product-table {
+  width: 100%;
+}
+
+.product-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.product-table th,
+.product-table td {
+  padding: 10px;
+  text-align: left;
+}
+
+.product-table th {
+  background-color: #f5f5f5;
+}
+
+.product-table .product-image {
+  width: 100px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.product-header-buttons {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px; /* Adjust the spacing between buttons */
+}
+
+.head-buttons {
+  display: flex;
+  justify-content: flex-end; /* Aligns items to the right */
+  margin-right: 20px; /* Adjust margin for spacing */
+}
+
+.create-product {
+  width: 150px; /* Adjust button container width */
+  margin-right: 10px; /* Add margin between buttons */
+}
+
+.upload-product {
+  width: 150px; /* Adjust button container width */
 }

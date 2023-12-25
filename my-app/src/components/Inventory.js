@@ -6,6 +6,7 @@ import { Card, CardBody, CardTitle, CardText, Button  } from 'reactstrap';
 import '../Styles/Inventory.css';
 import NavigationBar from './NavigationBar';
 import Header from './Header';
+import SearchBar from './searchBar';
 
 
 
@@ -13,21 +14,22 @@ function Inventory() {
   const history = useHistory();
   const [data, setData] = useState([]);
   const [message, setMessage] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const fetchData = async () => {
+
+    const response = await axios.get('http://localhost:4002/admin/inventories');
+    setData(response.data.docs);
+
+  }
 
   useEffect(() => {
-    async function fetchData() {
-      const response = await axios.get('https://us-central1-cart-4dab3.cloudfunctions.net/api/inventories/all');
-      setData(response.data);
-    }
-
     fetchData();
   }, []);
 
-
-
 const handleDelete = async (inventoryId) => {
   try {
-    await fetch(`https://us-central1-cart-4dab3.cloudfunctions.net/api/admin/inventory/${inventoryId}`, 
+    await fetch(`http://localhost:4002/admin/inventory/${inventoryId}`, 
     {
       method: 'DELETE',
     })
@@ -55,9 +57,26 @@ const handleDelete = async (inventoryId) => {
   }
 };
 
+const handleSearch = async () => {
+  try {
+    const requestBody = {
+      "productCode":`${searchTerm}`
+    }
+    const response = await axios.post(`http://localhost:4002/admin/inventories/search`, requestBody);
+    setData(response.data.inventory.docs || []);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 
 const handleEdit = (_id) => {
   history.push(`/UpdateInventory/${_id}`);
+};
+
+const clearSearch = () => {
+  setSearchTerm(''); // Clear the searchTerm state
+  fetchData(); // Fetch all carts again
 };
 
   
@@ -101,23 +120,24 @@ const handleEdit = (_id) => {
 
         <Header/>
         <NavigationBar/>
+
+        <SearchBar
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        handleSearch={handleSearch}
+        clearSearch={clearSearch}
+      />
+
+
         {message && (
           <div className="alert alert-dark" role="alert">
             {message}
           </div>
         )}
 
-        
-      <div>
-          <header className="header">
-            <h1><b>Inventory</b></h1>
-          </header>
-        </div>
-
-
         <div>
         <Link to="/CreateInventory">
-          <button>Create/Update Inventory</button>
+          <button className="create-inventory-btn">Update Inventory</button>
         </Link>
         </div>
 

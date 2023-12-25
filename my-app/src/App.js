@@ -11,6 +11,8 @@ import CreateCart from './components/CreateCart';
 import CreateInventory from './components/CreateInventory';
 import UpdateProduct from './components/UpdateProduct';
 import UpdateInventory from './components/UpdateInventory'
+import User from './components/User'
+import CreateUser from './components/CreateUser'
 
 function App() {
   return (
@@ -22,11 +24,14 @@ function App() {
       <Route path="/Product" component={Product} />
       <Route path="/Inventory" component={Inventory} />
       <Route path="/Cart" component={Cart} />
+      <Route path="/User" component={User} />
+      <Route path="/createUser" component={CreateUser} />
       <Route path="/createProduct" component={CreateProduct} />
       <Route path="/createCart" component={CreateCart} />
       <Route path="/CreateInventory" component={CreateInventory} />
       <Route path="/UpdateProduct/:_id" component={UpdateProduct} />
       <Route path="/UpdateInventory/:_id" component={UpdateInventory} />
+      
       </Switch>
       </Router>
 

@@ -9,7 +9,7 @@ import NavigationBar from './NavigationBar';
 import Header from './Header';
 import SearchBar from './searchBar'
 
-function Product() {
+function User() {
   const history = useHistory();
   const [data, setData] = useState([]);
   const [message, setMessage] = useState('');
@@ -18,7 +18,7 @@ function Product() {
 
 
   const fetchData = async () => {
-    const response = await axios.get('http://localhost:4002/products');
+    const response = await axios.get('http://localhost:4002/users');
     setData(response.data.docs);
   }
 
@@ -34,10 +34,10 @@ function Product() {
   const handleSearch = async () => {
   try {
     const requestBody = {
-      "productName":`${searchTerm}`
+      username:`${searchTerm}`
     }
-    const response = await axios.post(`http://localhost:4002/product/search`, requestBody);
-    setData(response.data.product.  docs || []);
+    const response = await axios.post(`http://localhost:4002/users/search`, requestBody);
+    setData(response.data.user.docs || []);
   } catch (error) {
     console.error(error);
   }
@@ -45,9 +45,9 @@ function Product() {
 
   
 
-  const handleDelete = async (productId) => {
+  const handleDelete = async (userId) => {
     try {
-      await fetch(`http://localhost:4002/admin/product/${productId}`, 
+      await fetch(`http://localhost:4002/user/:${userId}`, 
       {
         method: 'DELETE',
       })
@@ -55,7 +55,7 @@ function Product() {
 
         if (response.ok) 
         {
-          setMessage('Product deleted successfully!');
+          setMessage('User deleted successfully!');
           setTimeout(() => {
             window.location.reload();
           }, 2000)
@@ -78,7 +78,7 @@ function Product() {
   
 
 
-  const handleEdit = (_id) => {
+  const AddCredits = (_id) => {
     history.push(`/UpdateProduct/${_id}`);
   };
 
@@ -92,13 +92,16 @@ function Product() {
 
         <Card className="shadow-sm">
           <CardBody>
-            <CardTitle className="cardTitle"><b> Product Name: </b> {data[i].productName}</CardTitle>
-            <CardText><b> Product Code: </b>{data[i].productCode} </CardText>
-            <CardText><b> Product Price: </b> {data[i].productPrice}</CardText>
-            <Button size="sm" color="primary" onClick={() => console.log(handleEdit(data[i]._id))}>Edit</Button>
-            &nbsp;
+            <CardTitle className="cardTitle"><b> User Name: </b> {data[i].username}</CardTitle>
+            <CardText><b> Email: </b>{data[i].email} </CardText>
+            <CardText><b> Display Name: </b> {data[i].displayName}</CardText>
+            <CardText><b> Admin Privilages: </b> {data[i].adminPrevilages.toString()}</CardText>
+            <CardText><b> Cart Connection: </b> {data[i].cartConnection}</CardText>
+            <Button size="sm" color="primary" onClick={() => AddCredits(data[i]._id)}>Add credits</Button>
             
-            <Button size="sm" color="danger"  onClick={() => handleDelete(data[i]._id)}>Delete</Button>
+            &nbsp;
+
+            <Button size="sm" color="danger" onClick={() => handleDelete(data[i]._id)}>Delete</Button>
           </CardBody>
         </Card>
 
@@ -139,14 +142,8 @@ function Product() {
       <div className="head-buttons">
 
         <div className='create-product'>
-        <Link to="/CreateProduct">
-          <button>Create Product</button>
-        </Link>
-        </div>
-
-        <div className='upload-product'>
-        <Link to="/CreateProduct">
-          <button>Upload Product</button>
+        <Link to="/CreateUser">
+          <button>Create New Admin</button>
         </Link>
         </div>
 
@@ -162,4 +159,4 @@ function Product() {
   );
 }
 
-export default Product;
+export default User;

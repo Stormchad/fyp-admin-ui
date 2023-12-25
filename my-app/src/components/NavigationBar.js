@@ -1,14 +1,11 @@
 import React from 'react';
-import { Navbar, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
+import { Navbar, Nav, NavItem, NavLink } from 'reactstrap';
+import '../Styles/NavigationBar.css'; // Ensure this is correctly imported
 
-function NavigationBar(props) {
-
-  const { currentPage } = props;
-
+function NavigationBar() {
   return (
-
-    <Navbar color="light" light expand="md">
-      <Nav className="ml-auto" navbar>
+    <Navbar className="custom-navbar" expand="md">
+      <Nav className="ml-auto" navbar> {/* This class aligns items to the right */}
         <NavItem>
           <NavLink href="/Cart">Carts</NavLink>
         </NavItem>
@@ -17,6 +14,9 @@ function NavigationBar(props) {
         </NavItem>
         <NavItem>
           <NavLink href="/Inventory">Inventories</NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink href="/User">Users</NavLink>
         </NavItem>
       </Nav>
     </Navbar>

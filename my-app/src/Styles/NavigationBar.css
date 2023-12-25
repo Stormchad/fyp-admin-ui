@@ -1,0 +1,13 @@
+.custom-navbar {
+    background-color: #34495e; /* A softer dark shade for a more professional look */
+    color: #ffffff;
+  }
+  
+  .custom-navbar .nav-link {
+    color: #ffffff;
+  }
+  
+  .custom-navbar .nav-link:hover {
+    color: #ecf0f1;
+  }
+  

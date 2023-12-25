@@ -7,47 +7,27 @@ import { createBrowserHistory } from 'history';
 import { useHistory } from 'react-router-dom';
 import NavigationBar from './NavigationBar';
 import Header from './Header';
-import SearchBar from './searchBar'
 
 function Product() {
   const history = useHistory();
   const [data, setData] = useState([]);
   const [message, setMessage] = useState('');
-  const [showUploadModal, setShowUploadModal] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
-
-
-  const fetchData = async () => {
-    const response = await axios.get('http://localhost:4002/products');
-    setData(response.data.docs);
-  }
 
   useEffect(() => {
+    async function fetchData() {
+      const response = await axios.get('https://us-central1-cart-4dab3.cloudfunctions.net/api/products');
+      setData(response.data);
+    }
+
     fetchData();
   }, []);
 
-  const clearSearch = () => {
-    setSearchTerm('');
-    fetchData();
-  };
-
-  const handleSearch = async () => {
-  try {
-    const requestBody = {
-      "productName":`${searchTerm}`
-    }
-    const response = await axios.post(`http://localhost:4002/product/search`, requestBody);
-    setData(response.data.product.  docs || []);
-  } catch (error) {
-    console.error(error);
-  }
-};
 
   
 
   const handleDelete = async (productId) => {
     try {
-      await fetch(`http://localhost:4002/admin/product/${productId}`, 
+      await fetch(`https://us-central1-cart-4dab3.cloudfunctions.net/api/admin/product/${productId}`, 
       {
         method: 'DELETE',
       })
@@ -74,8 +54,6 @@ function Product() {
       console.error(error);
     }
   };
-
-  
 
 
   const handleEdit = (_id) => {
@@ -122,35 +100,24 @@ function Product() {
     <div>
         <Header/>
         <NavigationBar/>
-
-        <SearchBar
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
-        handleSearch={handleSearch}
-        clearSearch={clearSearch}
-      />
-
         {message && (
           <div className="alert alert-dark" role="alert">
             {message}
           </div>
         )}
+      <div>
+          <header className="header">
+            <h1><b>Products</b></h1>
+          </header>
+        </div>
+        
 
-      <div className="head-buttons">
-
-        <div className='create-product'>
+        <div>
         <Link to="/CreateProduct">
           <button>Create Product</button>
         </Link>
         </div>
 
-        <div className='upload-product'>
-        <Link to="/CreateProduct">
-          <button>Upload Product</button>
-        </Link>
-        </div>
-
-      </div>
 
         <br></br>
         <br></br>

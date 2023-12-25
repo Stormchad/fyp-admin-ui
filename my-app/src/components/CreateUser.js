@@ -5,45 +5,41 @@ import NavigationBar from './NavigationBar';
 import Header from './Header';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 
-const CreateProduct = () => {
+const CreateUser = () => {
   const history = useHistory();
-  const [productName, setProductName] = useState('');
-  const [productCode, setProductCode] = useState('');
-  const [productPrice, setProductPrice] = useState('');
-  const [imageUrl, setImageUrl] = useState('');
+  const [username, setUsername] = useState('');
+  const [displayName, setDisplayName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     // Check if all fields are filled
-    if (productName && productCode && productPrice) {
-      
-      if (isNaN(productPrice)) {
-        console.error('Product price must be a number.');
-        setMessage('price should be a number');
-      }
+    if (username && displayName && email) {
+
       // Create the product object
-      const product = {
-        productName: productName,
-        productCode: productCode,
-        productPrice: parseFloat(productPrice),
-        imageUrl: imageUrl
-      };
+      const user = {
+        username:username,
+        email:email,
+        password:password,
+        displayName:displayName
+    };
 
       // Make the POST API call
-      fetch('https://us-central1-cart-4dab3.cloudfunctions.net/api/admin/product/create', {
+      fetch('http://localhost:4002/admins/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(product),
+        body: JSON.stringify(user),
       })
         .then((response) => {
 
           if (response.ok) 
           {
-            setMessage('Product created successfully!');
+            setMessage('User created successfully!');
             setTimeout(() => {
               history.goBack();
             }, 2000)
@@ -68,7 +64,7 @@ const CreateProduct = () => {
         <Header/>
         <NavigationBar/>
         <br></br>
-      <h1><b>Create Product</b></h1>
+      <h1><b>Create User</b></h1>
     </div>
     <div className="create-product-page">
       <form onSubmit={handleSubmit}>
@@ -78,39 +74,39 @@ const CreateProduct = () => {
             {message}
           </div>
         )}
-          <label htmlFor="productName">Product Name:</label>
+          <label htmlFor="username">User Name:</label>
           <input
             type="text"
-            id="productName"
-            value={productName}
-            onChange={(e) => setProductName(e.target.value)}
+            id="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
           />
         </div>
         <div className="form-group">
-          <label htmlFor="productCode">Product Code:</label>
+          <label htmlFor="displayName">Display Name:</label>
           <input
             type="text"
-            id="productCode"
-            value={productCode}
-            onChange={(e) => setProductCode(e.target.value)}
+            id="displayName"
+            value={displayName}
+            onChange={(e) => setDisplayName(e.target.value)}
           />
         </div>
         <div className="form-group">
-          <label htmlFor="productPrice">Product Price:</label>
+          <label htmlFor="email">Email:</label>
           <input
             type="text"
-            id="productPrice"
-            value={productPrice}
-            onChange={(e) => setProductPrice(e.target.value)}
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div className="form-group">
-          <label htmlFor="productCode">Product Image Url:</label>
+          <label htmlFor="password">Password:</label>
           <input
             type="text"
-            id="imageUrl"
-            value={imageUrl}
-            onChange={(e) => setImageUrl(e.target.value)}
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
         </div>
         <div className="form-group">
@@ -124,4 +120,4 @@ const CreateProduct = () => {
   );
 };
 
-export default CreateProduct;
+export default CreateUser;

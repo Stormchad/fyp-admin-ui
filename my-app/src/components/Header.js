@@ -5,7 +5,7 @@ function Header() {
         
     <div>
           <header className="header" color="light" light>
-                <h1><b>Shopper Experience Gen 2</b></h1>
+                <h1><b>Admin Panel</b></h1>
           </header>
     </div>
   );
